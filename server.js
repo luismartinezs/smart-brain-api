@@ -13,7 +13,7 @@ const auth = require("./controllers/authorization");
 
 const db = knex({
   client: "pg",
-  connection: process.env.POSTGRES_URI,
+  connection: process.env.POSTGRES_URI
 });
 
 const app = express();
@@ -26,9 +26,7 @@ app.get("/", (req, res) => {
   res.send("IT'S WORKING");
 });
 app.post("/signin", signin.signinAuthentication(db, bcrypt));
-app.post("/register", (req, res) => {
-  register.handleRegister(req, res, db, bcrypt);
-});
+app.post("/register", register.registerAuthentication(db, bcrypt));
 app.get("/profile/:id", auth.requireAuth, (req, res) => {
   profile.handleProfileGet(req, res, db);
 });
